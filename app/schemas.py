@@ -7,6 +7,7 @@ from pydantic.types import conint
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
+    phone: Optional[str] = None
 
 class UserOut(BaseModel):
     id : int
