@@ -51,6 +51,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Build and push
+        id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: ./
@@ -58,7 +59,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/sravanneeli:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/sravanneeli:buildcache,mode=max
+          cache-from: type=local,src=/tmp/.build-cache
+          cache-to: type=local,src=/tmp/.build-cache
       - name: Image Digest
         run: echo ${{ steps.docker_build.outputs.digest }}
