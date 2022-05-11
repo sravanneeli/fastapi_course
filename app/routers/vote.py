@@ -16,7 +16,7 @@ def vote(vote_sch: schemas.Vote, db: Session = Depends(get_db), user = Depends(o
 
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                                detail=f"{vote_sch.id} doesn't exist")
+                                detail=f"{vote_sch.post_id} doesn't exist")
 
     vote_query = db.query(models.Vote).filter(models.Vote.post_id == vote_sch.post_id,
                                               models.Vote.user_id == user.id)
